@@ -31,7 +31,6 @@ const RootLayout = () => {
 
   useEffect(() => {
     if (getAuth().currentUser) {
-      router.push('index')
     } else {
       router.replace('login')
     }

@@ -7,7 +7,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Toast } from 'toastify-react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import Checkbox from 'expo-checkbox';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 const Login = () => {
     const params = useLocalSearchParams()
     const auth = getAuth();
@@ -59,15 +59,15 @@ const Login = () => {
 
     const [remember, setRemember] = useState(false)
     return (
-        <View className='flex-1'>
+        <View className='flex-1 bg-[#17181C]'>
             <View className='mb-2 flex-1'>
                 <View className='relative'>
                     <Image className='w-full h-full' resizeMode='cover' source={require('@/assets/images/spiderman.jpg')} />
                     <LinearGradient colors={['#00000000', '#17181C']} className='absolute w-full h-full ' />
                 </View>
             </View>
-            <KeyboardAwareScrollView  className='flex-[1.9]'>
-                <View className='px-6'>
+            <KeyboardAwareScrollView className='flex-[1.9]'>
+                <View className='px-6 h-full'>
                     <ThemedText className='text-center text-3xl text-[#9c3b3b] mb-3' type='title'>Chào mừng quay trở lại</ThemedText>
                     <ThemedText className='text-xl mt-6 mb-3 text-[#b43030]'>Địa chỉ email</ThemedText>
                     <TextInput
