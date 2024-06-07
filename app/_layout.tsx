@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
+import { Platform, SafeAreaView, StyleSheet, Text, UIManager, View, useWindowDimensions } from 'react-native'
 import React, { useEffect } from 'react'
 import { NativeWindStyleSheet } from "nativewind";
 import { Redirect, Stack, router } from 'expo-router';
@@ -26,12 +26,15 @@ const queryClient = new QueryClient()
 const app = initializeApp(Config.firebaseConfig);
 // const analytics = getAnalytics(app);
 
-
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
 const RootLayout = () => {
 
   useEffect(() => {
-    if (getAuth().currentUser) {
-    } else {
+    if (!getAuth().currentUser) {
       router.replace('login')
     }
     return () => {
@@ -52,7 +55,7 @@ const RootLayout = () => {
     <MenuProvider>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider value={colorScheme === 'dark' ? darkTheme : DefaultTheme}>
-          <ToastManager width={size.width / 2} height={60} animationStyle={'rightInOut'} textStyle={{
+          <ToastManager width={size.width - 20} height={60} animationStyle={'rightInOut'} textStyle={{
             fontSize: 18
           }} />
           <Stack initialRouteName='login' screenOptions={{
