@@ -10,6 +10,8 @@ import Checkbox from 'expo-checkbox';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import MTextInput from '@/components/MTextInput';
 import MActivityIndicator from '@/components/MActivityIndicator';
+import { SQLiteProvider } from 'expo-sqlite';
+import { SqlLiteInit } from '@/databases/sqlite';
 const Login = () => {
     const params = useLocalSearchParams()
     const auth = getAuth();
@@ -96,6 +98,7 @@ const Login = () => {
     const [remember, setRemember] = useState(false)
     const [isLogin, setisLogin] = useState(true)
     return (
+        // <SQLiteProvider databaseName='comic_db.db' onInit={SqlLiteInit}>
         <View className='flex-1 bg-[#17181C]'>
             <View className='mb-2' style={{
                 flex: isLogin ? 1 : 0.5
@@ -154,6 +157,7 @@ const Login = () => {
                 </View>
             </KeyboardAwareScrollView>
         </View>
+        // </SQLiteProvider>
     )
 }
 

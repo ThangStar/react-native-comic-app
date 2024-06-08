@@ -1,6 +1,6 @@
 
 import { View, SafeAreaView, Image, FlatList, TouchableOpacity, ScrollView, useWindowDimensions, useColorScheme } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { ThemedText } from '@/components/ThemedText'
 import { ActivityIndicator, Chip, IconButton } from '@react-native-material/core'
 import { Ionicons } from '@expo/vector-icons'
@@ -14,7 +14,10 @@ import { useLocalSearchParams, useRouter } from 'expo-router'
 
 const ChapterList = ({ chapters }: { chapters: Chapter }) => {
   const colorScheme = useColorScheme()
-  const items = chapters.server_data
+  let items = chapters.server_data
+  if(items.length > 20){
+    items = items.slice(0, 20)
+  }
   return (
     <View className='w-full px-3'>
       <FlatList
@@ -37,6 +40,7 @@ const Details = () => {
   const router = useRouter()
   const size = useWindowDimensions()
   const colorScheme = useColorScheme();
+  const [isLove, setIsLove] = useState(false)
 
   if (isLoading || isFetching) {
     return (
@@ -63,9 +67,23 @@ const Details = () => {
               <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} className='w-full h-full' colors={colorScheme == 'dark' ? ['#17181C00', '#17181C'] : ['#ffffff00', '#000000']} />
             </View>
             <View className='absolute justify-between left-0 px-3 right-0 gap-4 w-screen bottom-6 z-50'>
-              <View className='flex-1'>
-                <ThemedText lightColor='white' type='subtitle' className=' opacity-90' style={{ letterSpacing: 4 }}>{detailsData?.data.seoOnPage.seoSchema.director}</ThemedText>
-                <ThemedText lightColor='white' type='title' className='text-xl' numberOfLines={2}>{detailsData?.data.seoOnPage.titleHead}</ThemedText>
+              <View className='flex-row'>
+                <View className='flex-1'>
+                  <ThemedText lightColor='white' type='subtitle' className=' opacity-90' style={{ letterSpacing: 4 }}>{detailsData?.data.seoOnPage.seoSchema.director}</ThemedText>
+                  <ThemedText lightColor='white' type='title' className='text-xl' numberOfLines={2}>{detailsData?.data.seoOnPage.titleHead}</ThemedText>
+                </View>
+                <View>
+                  <IconButton
+                    onPress={() => setIsLove(prev => !prev)}
+                    className='bg-red-500'
+                    style={{
+                      backgroundColor: isLove ? '#E7292950' : '#B0C5A430'
+                    }}
+                    color='red'
+                    icon={() => (
+                      <Ionicons className='' name='heart' size={26} color={isLove ? 'red' : '#B0C5A4'} />
+                    )} />
+                </View>
               </View>
               <View className='flex-1'>
                 <ThemedText className='text-red-500' type='defaultSemiBold'>{detailsData?.data.item.chapters[0].server_data.length} <ThemedText lightColor='white'>Chương</ThemedText>

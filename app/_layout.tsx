@@ -17,6 +17,8 @@ import { getAnalytics } from "firebase/analytics";
 import Config from '@/constants/Config';
 import ToastManager from 'toastify-react-native';
 import { getAuth } from '@firebase/auth';
+import { SQLiteProvider } from 'expo-sqlite';
+import { SqlLiteInit } from '@/databases/sqlite';
 NativeWindStyleSheet.setOutput({
   default: "native",
 });
@@ -52,12 +54,15 @@ const RootLayout = () => {
   const size = useWindowDimensions()
 
   return (
+
     <MenuProvider>
       <QueryClientProvider client={queryClient}>
+
         <ThemeProvider value={colorScheme === 'dark' ? darkTheme : DefaultTheme}>
           <ToastManager width={size.width - 20} height={60} animationStyle={'rightInOut'} textStyle={{
             fontSize: 18
           }} />
+
           <Stack initialRouteName='login' screenOptions={{
             headerTitleStyle: {
               fontSize: 24
@@ -83,18 +88,20 @@ const RootLayout = () => {
               </SafeAreaView>
             ,
           }}>
-            <Stack.Screen name='index' />
-            <Stack.Screen name='login' initialParams={{ app: app }} options={{
-              headerShown: false
-            }} />
-            <Stack.Screen name='details' options={{
-              headerShown: false
-            }} />
+              <Stack.Screen name='index' />
+              <Stack.Screen name='login' initialParams={{ app: app }} options={{
+                headerShown: false
+              }} />
+              <Stack.Screen name='details' options={{
+                headerShown: false
+              }} />
 
-            <Stack.Screen name='read' options={{
-              headerShown: false
-            }} />
+              <Stack.Screen name='read' options={{
+                headerShown: false
+              }} />
+
           </Stack>
+
         </ThemeProvider >
       </QueryClientProvider>
     </MenuProvider>
