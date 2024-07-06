@@ -17,8 +17,6 @@ import { getAnalytics } from "firebase/analytics";
 import Config from '@/constants/Config';
 import ToastManager from 'toastify-react-native';
 import { getAuth } from '@firebase/auth';
-import { SQLiteProvider } from 'expo-sqlite';
-import { SqlLiteInit } from '@/databases/sqlite';
 NativeWindStyleSheet.setOutput({
   default: "native",
 });
@@ -88,18 +86,21 @@ const RootLayout = () => {
               </SafeAreaView>
             ,
           }}>
-              <Stack.Screen name='index' />
-              <Stack.Screen name='login' initialParams={{ app: app }} options={{
-                headerShown: false
-              }} />
-              <Stack.Screen name='details' options={{
-                headerShown: false
-              }} />
+            <Stack.Screen name='index' />
+            <Stack.Screen name='login' initialParams={{ app: app }} options={{
+              headerShown: false
+            }} />
+            <Stack.Screen name='details' options={{
+              headerShown: false
+            }} />
 
-              <Stack.Screen name='read' options={{
-                headerShown: false
-              }} />
+            <Stack.Screen name='read' options={{
+              headerShown: false
+            }} />
 
+            <Stack.Screen name='createInfo' options={{
+              headerShown: false
+            }} />
           </Stack>
 
         </ThemeProvider >
@@ -109,5 +110,3 @@ const RootLayout = () => {
 }
 
 export default RootLayout
-
-const styles = StyleSheet.create({})

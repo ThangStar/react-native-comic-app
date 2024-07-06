@@ -47,9 +47,9 @@ const Index = () => {
           </View>
           <View className='rounded-2xl mt-3 shadow-sm shadow-slate-800 border-gray-900 border-2'>
             <LinearGradient colors={['', '']} className='flex-row justify-between items-center rounded-2xl shadow-lg relative overflow-hidden'>
-              <View className='flex-row justify-between items-center rounded-2xl shadow-lg px-3 py-4 relative overflow-hidden z-40'>
+              <View className='flex-row w-full justify-between items-center rounded-2xl shadow-lg px-3 py-4 relative overflow-hidden z-40'>
                 <LinearGradient className='absolute left-0 top-0 z-20 right-0 bottom-0' colors={['#00000010', '#000000de']} />
-                <View className='flex-col justify-between h-36 z-30 flex-1'>
+                <View className='flex-col justify-between h-36 z-30 flex-1 w-full'>
                   <View className=''>
                     <ThemedText numberOfLines={3} className='text-[#ffe6c7]' type='title' ellipsizeMode='tail'>
                       {item[0].name}

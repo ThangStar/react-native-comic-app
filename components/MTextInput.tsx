@@ -9,12 +9,12 @@ const MTextInput = ({ ...otherProps }: Props) => {
         <TextInput
             {...otherProps}
             placeholderTextColor={'#9c3b3b80'}
-            className='bg-transparent outline-none py-3 px-4 text-red-500  border-[#9c3b3b] focus:border-red-500'
+            className='bg-transparent outline-none py-3 px-4 text-red-500  border-[#9c3b3b]'
             underlineColorAndroid={'#00000000'}
+            
             style={{
                 backgroundColor: '#9c3b3b10',
                 borderWidth: 2,
-                // borderColor: '#9c3b3b',
             }}></TextInput>
     )
 }

@@ -1,7 +1,6 @@
-import { View, SafeAreaView, NativeSyntheticEvent, TextInputChangeEventData, TouchableOpacity, Image, FlatList, TextInput, ScrollView, LayoutAnimation, ActivityIndicator } from 'react-native'
+import { View, NativeSyntheticEvent, TextInputChangeEventData, TouchableOpacity, Image, LayoutAnimation } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ThemedText } from '@/components/ThemedText'
-import { Button } from '@react-native-material/core'
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@firebase/auth';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Toast } from 'toastify-react-native'
@@ -10,8 +9,7 @@ import Checkbox from 'expo-checkbox';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import MTextInput from '@/components/MTextInput';
 import MActivityIndicator from '@/components/MActivityIndicator';
-import { SQLiteProvider } from 'expo-sqlite';
-import { SqlLiteInit } from '@/databases/sqlite';
+import { getStoreData, storeData } from '@/utils/utils';
 const Login = () => {
     const params = useLocalSearchParams()
     const auth = getAuth();
@@ -26,8 +24,18 @@ const Login = () => {
                 return
             }
             await signInWithEmailAndPassword(auth, email, password).then(e => {
-                Toast.success("Đăng nhập thành công!")
-                router.replace('/')
+                const authUser: AuthUser = {
+                    username: email,
+                    password: password
+                }
+                if (auth.currentUser?.photoURL && auth.currentUser?.displayName) {
+                    Toast.success("Đăng nhập thành công!")
+
+                    router.replace('/')
+                } else {
+                    router.navigate('/createInfo')
+                }
+                // if(aut)
             }).catch(err => {
                 switch (err.code) {
                     case 'auth/invalid-email':
@@ -80,11 +88,30 @@ const Login = () => {
         } finally {
             setIsLoading(false)
         }
-
     }
-    const [email, setemail] = useState<string>('thangnv2k2@gmail.com')
-    const [password, setPassword] = useState<string>('thang@@@')
+
+    const [email, setemail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
     const [rePassword, setRePassword] = useState<string>('')
+
+    interface AuthUser {
+        username: string,
+        password: string
+    }
+    const getAuthUser = async () => {
+        const authUser = await getStoreData('AUTH_USER')
+        if (authUser) {
+            setemail((authUser as AuthUser).username)
+            setPassword((authUser as AuthUser).password)
+        }
+    }
+
+    const saveAuthUser = async (authUser: AuthUser) => {
+        await storeData("AUTH_USER", authUser)
+    }
+    useEffect(() => {
+        getAuthUser()
+    }, [])
     const onChangemail = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
         setemail(e.nativeEvent.text)
     }
@@ -104,7 +131,7 @@ const Login = () => {
                 flex: isLogin ? 1 : 0.5
             }}>
                 <View className='relative'>
-                    <Image className='w-full h-full' resizeMode='cover' source={require('@/assets/images/spiderman.jpg')} />
+                    <Image className='w-full h-96' resizeMode='cover' source={require('@/assets/images/spiderman.jpg')} />
                     <LinearGradient colors={['#00000000', '#17181C']} className='absolute w-full h-full ' />
                 </View>
             </View>
@@ -119,7 +146,7 @@ const Login = () => {
                         <ThemedText className='text-xl mt-6 mb-3 text-[#b43030]'>Nhập lại mật khẩu</ThemedText>
                         <MTextInput onChange={onChangeRePassword} value={rePassword} placeholder='******' secureTextEntry></MTextInput>
                     </View>)}
-                    <View className='my-6' >
+                    <View className='my-6 flex justify-start' >
                         {isLogin && (<View className=' flex-row gap-x-3 items-start'>
                             <Checkbox value={remember} color={'#b43030'} onValueChange={() => setRemember(prev => !prev)} />
                             <ThemedText className='text-[#c54b4b]'>Ghi nhớ đăng nhập</ThemedText>
