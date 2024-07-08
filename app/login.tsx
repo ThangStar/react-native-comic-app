@@ -30,8 +30,8 @@ const Login = () => {
                 }
                 if (auth.currentUser?.photoURL && auth.currentUser?.displayName) {
                     Toast.success("Đăng nhập thành công!")
-
-                    router.replace('/')
+                    // router.replace('/')
+                    router.navigate('/createInfo')
                 } else {
                     router.navigate('/createInfo')
                 }

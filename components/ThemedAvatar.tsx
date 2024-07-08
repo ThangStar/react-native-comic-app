@@ -8,7 +8,9 @@ type ThemedAvatarProps = AvatarProps & {
 const ThemedAvatar = (props: ThemedAvatarProps) => {
   const color = useThemeColor({ light: 'white', dark: 'black' }, 'text');
   return (
-    <Avatar {...props} color={color}/>
+    <View className='rounded-full border-2 border-[#ffffff20]'>
+      <Avatar {...props} color={color}/>
+    </View>
   )
 }
 
